@@ -1,0 +1,80 @@
+{
+  "_args": [
+    [
+      "node-quadtrees@latest",
+      "C:\\Users\\yoni\\Desktop\\Projects\\AgarSH"
+    ]
+  ],
+  "_from": "node-quadtrees@latest",
+  "_id": "node-quadtrees@1.1.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/node-quadtrees",
+  "_nodeVersion": "4.5.0",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/node-quadtrees-1.1.1.tgz_1474472896822_0.8489966620691121"
+  },
+  "_npmUser": {
+    "email": "yoni.sherez@gmail.com",
+    "name": "yoyosh"
+  },
+  "_npmVersion": "3.5.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "node-quadtrees",
+    "raw": "node-quadtrees@latest",
+    "rawSpec": "latest",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_shasum": "cf90355d426adee7987076254898a84c83a1d378",
+  "_shrinkwrap": null,
+  "_spec": "node-quadtrees@latest",
+  "_where": "C:\\Users\\yoni\\Desktop\\Projects\\AgarSH",
+  "author": {
+    "name": "yoyosh"
+  },
+  "bugs": {
+    "url": "https://github.com/yoyoshGithub/node-quadtrees/issues"
+  },
+  "dependencies": {},
+  "description": "Node.js QuadTree Implemention.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "cf90355d426adee7987076254898a84c83a1d378",
+    "tarball": "https://registry.npmjs.org/node-quadtrees/-/node-quadtrees-1.1.1.tgz"
+  },
+  "gitHead": "a70ad4b807ccee55cf5e317a50a33e407d2452c6",
+  "homepage": "https://github.com/yoyoshGithub/node-quadtrees",
+  "keywords": [
+    "node",
+    "quad",
+    "quadtree",
+    "tree"
+  ],
+  "license": "Apache-2.0",
+  "main": "src/index.js",
+  "maintainers": [
+    {
+      "name": "yoyosh",
+      "email": "yoni.sherez@gmail.com"
+    }
+  ],
+  "name": "node-quadtrees",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoyoshGithub/node-quadtrees.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.1.1"
+}

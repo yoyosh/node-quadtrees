@@ -50,6 +50,36 @@ Circle.prototype.split = function(amount) {
   return splits;
 };
 
+Circle.prototype.contains = function(check) {
+  if (check instanceof Circle)
+    return this.containsCircle(check);
+  else if (check instanceof Rectangle)
+    return this.containsRectangle(check);
+
+  return false;
+};
+
+Circle.prototype.containsRectangle = function(rect) {
+  var bounds = rect.bounds();
+
+  return (
+    this.intersectsPoint(bounds.left) &&
+    this.intersectsPoint(bounds.right) &&
+    this.intersectsPoint(bounds.top) &&
+    this.intersectsPoint(bounds.bottom)
+  );
+};
+
+Circle.prototype.containsCircle = function(circle) {
+  var distance = Math.sqrt(
+    Math.pow(circle.x - this.x, 2) +
+    Math.pow(circle.y - this.y, 2)
+  );
+  var radiusDiff = Math.abs(circle.radius - this.radius);
+
+  return distance < radiusDiff;
+};
+
 Circle.prototype.intersects = function(check) {
   if (check instanceof Circle)
     return this.intersectsCircle(check);

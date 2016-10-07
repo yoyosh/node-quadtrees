@@ -30,18 +30,17 @@ Node.prototype.add = function (items, dontCheck) {
     var item = items[i];
 
     switch(this.mode) {
-      case Node.ITEMS:
-        item.__quadnode = this;
-        item.__quadnodeindex = this.items.push(item) - 1;
-        break;
       case Node.NODES:
         var loc = this.checkLocation(item);
 
-        if(loc < 0)
+        if(loc >= 0 && loc <= 3) {
+          var node = this.nodes[loc];
+          node.add(item);
           break;
-
-        var node = this.nodes[loc];
-        node.add(item);
+        }
+      case Node.ITEMS:
+        item.__quadnode = this;
+        item.__quadnodeindex = this.items.push(item) - 1;
         break;
     }
   }
@@ -90,23 +89,6 @@ Node.prototype.getRange = function (range, accurate, pred, itemCb, returnArray) 
   var arr = returnArray ? [] : null;
 
   switch (this.mode) {
-    case Node.ITEMS:
-      for(var i = 0; i < this.items.length; i++) {
-        var item = this.items[i];
-
-        if(range && accurate ? !range.intersectsPoint(item.position) : false)
-          continue;
-
-        if(pred ? !pred.call(null, item) : false)
-          continue;
-
-        if(itemCb)
-          itemCb.call(null, item);
-
-        if(returnArray)
-          arr.push(item);
-      }
-      break;
     case Node.NODES:
       for(var i = 0; i < this.nodes.length; i++) {
         var node = this.nodes[i];
@@ -119,6 +101,22 @@ Node.prototype.getRange = function (range, accurate, pred, itemCb, returnArray) 
         if(returnArray && nodeArr)
           arr = arr.concat(nodeArr);
       }
+    case Node.ITEMS:
+      for(var i = 0; i < this.items.length; i++) {
+        var item = this.items[i];
+
+        if(range && accurate ? !range.intersects(item.shape) : false)
+          continue;
+
+        if(pred ? !pred.call(null, item) : false)
+          continue;
+
+        if(itemCb)
+          itemCb.call(null, item);
+
+        if(returnArray)
+          arr.push(item);
+      }
       break;
   }
 
@@ -130,19 +128,27 @@ Node.prototype.getAll = function (itemCb, returnArray) {
 };
 
 Node.prototype.checkLocation = function (item) {
-  if (item.position.x < this.range.x ||
-    item.position.y < this.range.y ||
-    item.position.x > (this.range.x + this.range.width) ||
-    item.position.y > (this.range.y + this.range.height))
+  if (item.shape.x < this.range.x ||
+    item.shape.y < this.range.y ||
+    item.shape.x > (this.range.x + this.range.width) ||
+    item.shape.y > (this.range.y + this.range.height))
     return -1;
 
   var loc = 0;
 
-  if(item.position.x > (this.range.x + (this.range.width / 2)))
+  if(item.shape.x > (this.range.x + (this.range.width / 2)))
     loc++;
 
-  if(item.position.y > (this.range.y + (this.range.height / 2)))
+  if(item.shape.y > (this.range.y + (this.range.height / 2)))
     loc += 2;
+
+  var node = this.nodes[loc];
+
+  if(!node)
+    return loc;
+
+  if(!node.range.contains(item.shape))
+    loc += 4;
 
   return loc;
 };
@@ -151,12 +157,11 @@ Node.prototype.getLength = function () {
   var len = 0;
 
   switch(this.mode) {
-    case Node.ITEMS:
-      len = this.items.length;
-      break;
     case Node.NODES:
       for(var i = 0; i < this.nodes.length; i++)
         len += this.nodes[i].getLength();
+    case Node.ITEMS:
+      len += this.items.length;
       break;
   }
 
@@ -190,9 +195,11 @@ Node.prototype.subdivide = function () {
   for(var i = 0; i < 4; i++)
     this.nodes.push(new Node(ranges[i], this, this.quadtree));
 
-  this.add(this.items, true);
+  var items = this.items;
 
   this.items = [];
+
+  this.add(items, true);
 };
 
 Node.prototype.merge = function () {

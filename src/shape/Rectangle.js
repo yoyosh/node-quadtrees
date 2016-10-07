@@ -65,6 +65,22 @@ Rectangle.prototype.split = function (amount) {
   return parts;
 };
 
+Rectangle.prototype.contains = function (shape) {
+  var bounds = this.getBounds();
+  var checkBounds = shape.getBounds();
+
+  if(
+    bounds.left >= checkBounds.left ||
+    bounds.right <= checkBounds.right ||
+    bounds.top >= checkBounds.top ||
+    bounds.bottom <= checkBounds.bottom
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
 Rectangle.prototype.intersects = function (check) {
   if(check instanceof Rectangle)
     return this.intersectsRectangle(check);

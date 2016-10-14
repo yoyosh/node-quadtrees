@@ -1,8 +1,12 @@
 const Node = require("./QuadNode");
 
+var nextId = 1;
+
 module.exports = QuadTree;
 
 function QuadTree (range, maxNodeItems, maxLevel) {
+  this.id = nextId++;
+
   this.maxNodeItems = maxNodeItems;
   this.maxLevel = maxLevel;
 
@@ -19,11 +23,12 @@ QuadTree.prototype.remove = function (items) {
   for(var i = 0; i < items.length; i++) {
     var item = items[i];
 
-    var node = item.__quadnode;
-    var index = item.__quadnodeindex;
+    var node = item["__quadnode" + this.id];
+    var index = item["__quadnodeindex" + this.id];
 
-    if((!node) || (index == null))
+    if((!node) || (index == null)) {
       continue;
+    }
 
     node.removeIndex(index);
   }
@@ -41,7 +46,7 @@ QuadTree.prototype.update = function (items) {
   for(var i = 0; i < items.length; i++) {
     var item = items[i];
 
-    var node = item.__quadnode;
+    var node = item["__quadnode" + this.id];
 
     if(!node || (node.checkLocation(item) >= 0))
       continue;
@@ -66,5 +71,5 @@ QuadTree.prototype.getRange = function (range, accurate, pred, itemCb, returnArr
 };
 
 QuadTree.prototype.getAll = function (itemCb, returnArray) {
-  return this.root.getAll();
+  return this.root.getAll(itemCb, returnArray);
 };

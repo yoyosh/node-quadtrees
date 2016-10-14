@@ -39,25 +39,24 @@ Node.prototype.add = function (items, dontCheck) {
           break;
         }
       case Node.ITEMS:
-        item.__quadnode = this;
-        item.__quadnodeindex = this.items.push(item) - 1;
+        item["__quadnode" + this.quadtree.id] = this;
+        item["__quadnodeindex" + this.quadtree.id] = this.items.push(item) - 1;
         break;
     }
   }
 };
 
 Node.prototype.removeIndex = function (index) {
-  if (this.mode != Node.ITEMS ||
-    this.getLength() <= index ||
+  if (this.items.length <= index ||
     index < 0)
     return false;
 
-  this.items[index].__quadnode = undefined;
-  this.items[index].__quadnodeIndex = undefined;
+  this.items[index]["__quadnode" + this.quadtree.id] = undefined;
+  this.items[index]["__quadnodeindex" + this.quadtree.id] = undefined;
 
   if(this.items.length - index != 1) {
     this.items[index] = this.items.pop();
-    this.items[index].__quadnodeindex = index;
+    this.items[index]["__quadnodeindex" + this.quadtree.id] = index;
   } else
     this.items.pop();
 

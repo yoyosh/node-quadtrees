@@ -48,7 +48,9 @@ QuadTree.prototype.update = function (items) {
 
     var node = item["__quadnode" + this.id];
 
-    if(!node || (node.checkLocation(item) >= 0 && node.range.contains(item.shape)))
+    var location = node.checkLocation(item);
+
+    if(!node || !(location >= 0 && location <= 3) || node.range.contains(item.shape))
       continue;
 
     this.remove(item);

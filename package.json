@@ -7,14 +7,14 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yoyoshGithub/node-quadtrees.git"
+    "url": "git+https://github.com/yoyosh/node-quadtrees.git"
   },
   "author": "yoyosh",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/yoyoshGithub/node-quadtrees/issues"
+    "url": "https://github.com/yoyosh/node-quadtrees/issues"
   },
-  "homepage": "https://github.com/yoyoshGithub/node-quadtrees",
+  "homepage": "https://github.com/yoyosh/node-quadtrees",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
